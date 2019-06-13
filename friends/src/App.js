@@ -9,7 +9,11 @@ class App extends React.Component{
     super(props);
     this.state = {
       friendData:{},
-      hasData: false
+      hasData: false,
+      name:'',
+      age:'',
+      email:''
+      
     }
   }
 
@@ -18,11 +22,14 @@ class App extends React.Component{
       .then(response => this.setState({friendData: response.data}))
       .then(()=> this.setState({hasData: true}))
       .catch(err => console.log(err));
-    
   }
 
   componentDidUpdate(){
     //console.log(this.state.friendData)
+  }
+
+  changeHandler = event => {
+    this.setState({[event.target.name]: event.target.value})
   }
 
   render(){
@@ -31,7 +38,7 @@ class App extends React.Component{
       return(
         <div>
           <CardDisplay friendData={this.state.friendData}/>
-          <AddFriend />
+          <AddFriend name={this.state.name} age={this.state.age} email={this.state.email} changeHandler={this.changeHandler}/>
         </div>
         
       )
